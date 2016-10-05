@@ -14,8 +14,7 @@ ifeq "${ARMEL_SRC_HOME}" ""
     $(error error: please source armel_env first!)
 endif
 
-MODULES = include man pics configs scripts
-MODULES += arietta_sdk arietta_sdk_src
+MODULES = $(shell ls -d */ | cut -f1 -d'/' | grep -v toolchain | grep -v host)
 
 all::
 	@echo "+-----------------------------------------------------------+"
@@ -29,18 +28,13 @@ all::
 	@echo "| make get_toolchain      -> install toolchain              |"
 	@echo "| make get_latest_kernel  -> download latest kernel version |"
 	@echo "| make get_image_tarballs -> download image tarballs        |"
+	@echo "| make get_..._image_tarballs -> download specific tarball  |"
 	@echo "| make get_all            -> get all of the above           |"
 	@echo "| make clean              -> clean all dir/subdirs          |"
 	@echo "| make distclean          -> complete cleanup/delete        |"
-	@echo "| make mrproper           -> do mrproper cleanup            |"
-	@echo "| make man                -> show arietta_sdk manpage       |"
 	@echo "| ...                                                       |"
-	@echo "| make make_sdcard        -> small tool to make a read to   |"
-	@echo "|                            use SD-Card                    |"
-	@echo "| make install            -> install some scripts to        |"
-	@echo "|                            $(HOME)/bin              |"
-	@echo "| make uninstall          -> remove scripts from            |"
-	@echo "|                            $(HOME)/bin              |"
+	@echo "| make install            -> install some scripts to $(HOME)|"
+	@echo "| make uninstall          -> remove scripts from $(HOME)    |"
 	@echo "+-----------------------------------------------------------+"
 
 clean::
@@ -50,32 +44,29 @@ clean::
 distclean: clean clean_toolchain clean_external clean_kernel clean_images clean_user_home
 
 clean_toolchain::
-	($(ARMEL_HOME)/scripts/clean_sdk.sh -t)
+	($(ARMHF_HOME)/scripts/clean_sdk.sh -t)
 
 clean_external::
-	($(ARMEL_HOME)/scripts/clean_sdk.sh -e)
+	($(ARMHF_HOME)/scripts/clean_sdk.sh -e)
 
 clean_kernel::
-	($(ARMEL_HOME)/scripts/clean_sdk.sh -k)
+	($(ARMHF_HOME)/scripts/clean_sdk.sh -k)
 
 clean_images::
-	($(ARMEL_HOME)/scripts/clean_sdk.sh -i)
+	($(ARMHF_HOME)/scripts/clean_sdk.sh -i)
 
 clean_user_home::
-	($(ARMEL_HOME)/scripts/clean_sdk.sh -u)
+	($(ARMHF_HOME)/scripts/clean_sdk.sh -u)
 
 clean_opt: clean_toolchain clean_external clean_kernel clean_images
 
-mrproper: clean
-	($(ARMEL_HOME)/scripts/clean_sdk.sh -m)
-
 install::
-	(install $(ARMEL_HOME)/scripts/make_sdcard.sh $(HOME)/bin/arietta_sdk_make_sdcard.sh)
-	(install $(ARMEL_HOME)/scripts/handle_kernel.sh $(HOME)/bin/arietta_sdk_handle_kernel.sh)
+	(install $(ARMHF_HOME)/scripts/make_sdcard.sh $(HOME)/bin/a20_sdk_make_sdcard.sh)
+	(install $(ARMHF_HOME)/scripts/handle_kernel.sh $(HOME)/bin/a20_sdk_handle_kernel.sh)
 
 uninstall::
-	(rm -rf $(HOME)/bin/arietta_sdk_make_sdcard.sh)
-	(rm -rf $(HOME)/bin/arietta_sdk_handle_kernel.sh)
+	(rm -rf $(HOME)/bin/a20_sdk_make_sdcard.sh)
+	(rm -rf $(HOME)/bin/a20_sdk_handle_kernel.sh)
 
 init_sdk: distclean
 	@echo "+----------------------------------------------------------+"
@@ -83,7 +74,7 @@ init_sdk: distclean
 	@echo "|              Init SDK -> you may need sudo               |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMEL_HOME)/scripts/init_sdk.sh -a)
+	($(ARMHF_HOME)/scripts/init_sdk.sh -a)
 
 init_user_home: clean_user_home
 	@echo "+----------------------------------------------------------+"
@@ -91,7 +82,7 @@ init_user_home: clean_user_home
 	@echo "|              Init $USER specific SDK parts               |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMEL_HOME)/scripts/init_sdk.sh -u)
+	($(ARMHF_HOME)/scripts/init_sdk.sh -u)
 
 init_opt: clean_opt
 	@echo "+----------------------------------------------------------+"
@@ -99,7 +90,7 @@ init_opt: clean_opt
 	@echo "|              Init SDK (/opt) -> you may need sudo        |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMEL_HOME)/scripts/init_sdk.sh -o)
+	($(ARMHF_HOME)/scripts/init_sdk.sh -o)
 
 #
 # run all get actions in sequence
@@ -117,7 +108,7 @@ get_external_repos::
 	@echo "|               Clone useful external repos                |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMEL_HOME)/scripts/get_external_git_repos.sh -p "git")
+	($(ARMHF_HOME)/scripts/get_external_git_repos.sh -p "git")
 
 get_latest_kernel::
 	@echo "+----------------------------------------------------------+"
@@ -125,7 +116,23 @@ get_latest_kernel::
 	@echo "|        Download latest supported kernel versions         |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMEL_HOME)/scripts/get_latest_linux_kernel.sh -a)
+	($(ARMHF_HOME)/scripts/get_latest_linux_kernel.sh -a)
+
+get_latest_rt_kernel::
+	@echo "+----------------------------------------------------------+"
+	@echo "|                                                          |"
+	@echo "|        Download latest supported rt kernel version       |"
+	@echo "|                                                          |"
+	@echo "+----------------------------------------------------------+"
+	($(ARMHF_HOME)/scripts/get_latest_linux_kernel.sh -r)
+
+get_latest_nonrt_kernel::
+	@echo "+----------------------------------------------------------+"
+	@echo "|                                                          |"
+	@echo "|        Download latest supported nonrt kernel version    |"
+	@echo "|                                                          |"
+	@echo "+----------------------------------------------------------+"
+	($(ARMHF_HOME)/scripts/get_latest_linux_kernel.sh -n)
 
 get_toolchain::
 	@echo "+----------------------------------------------------------+"
@@ -133,7 +140,7 @@ get_toolchain::
 	@echo "|        Download latest supported toolchain version       |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMEL_HOME)/scripts/get_toolchain.sh)
+	($(ARMHF_HOME)/scripts/get_toolchain.sh)
 
 get_image_tarballs::
 	@echo "+----------------------------------------------------------+"
@@ -141,11 +148,52 @@ get_image_tarballs::
 	@echo "|        Download latest supported image tarballs          |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMEL_HOME)/scripts/get_image_tarballs.sh)
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b bananapi)
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b baalue)
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b bananapi-pro)
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b cubietruck)
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b olimex)
 
+get_bananapi_image_tarballs::
+	@echo "+----------------------------------------------------------+"
+	@echo "|                                                          |"
+	@echo "|        Download latest bananapi image tarballs           |"
+	@echo "|                                                          |"
+	@echo "+----------------------------------------------------------+"
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b bananapi)
 
-man::
-	(cd man && $(MAKE) $@)
+get_baalue_image_tarballs::
+	@echo "+----------------------------------------------------------+"
+	@echo "|                                                          |"
+	@echo "|        Download latest bananapi image tarballs           |"
+	@echo "|                                                          |"
+	@echo "+----------------------------------------------------------+"
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b baalue)
+
+get_bananapi-pro_image_tarballs::
+	@echo "+----------------------------------------------------------+"
+	@echo "|                                                          |"
+	@echo "|        Download latest bananapi-pro image tarballs       |"
+	@echo "|                                                          |"
+	@echo "+----------------------------------------------------------+"
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b bananapi-pro)
+
+get_cubietruck_image_tarballs::
+	@echo "+----------------------------------------------------------+"
+	@echo "|                                                          |"
+	@echo "|        Download latest cubietruck image tarballs         |"
+	@echo "|                                                          |"
+	@echo "+----------------------------------------------------------+"
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b cubietruck)
+
+get_olimex_image_tarballs::
+	@echo "+----------------------------------------------------------+"
+	@echo "|                                                          |"
+	@echo "|        Download latest olimex image tarballs             |"
+	@echo "|                                                          |"
+	@echo "+----------------------------------------------------------+"
+	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b olimex)
+
 
 #
 # create ready to use sdcards
@@ -156,4 +204,4 @@ make_sdcard::
 	@echo "|              Start tool to make a SD-Card                |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMEL_HOME)/scripts/make_sdcard.sh)
+	($(ARMHF_HOME)/scripts/make_sdcard.sh)
