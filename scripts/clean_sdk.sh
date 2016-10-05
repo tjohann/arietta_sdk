@@ -24,27 +24,11 @@
 #
 ################################################################################
 #
-# Date/Beginn :    27.09.2016/17.04.2016
+# Date/Beginn :    05.10.2016/17.04.2016
 #
-# Version     :    V2.00
+# Version     :    V0.01
 #
-# Milestones  :    V2.00 (sep 2016) -> update version info fo A20_SDK_V2.0.0
-#                  V1.06 (sep 2016) -> add can_lin_env
-#                  V1.05 (aug 2016) -> sudo handling at beginning
-#                  V1.04 (jul 2016) -> add features of make_sdcard.sh
-#                  V1.03 (jul 2016) -> add mrproper to remove $ARMHF_*_HOME
-#                                      some minor rework of the code
-#                                      change exit code to 3
-#                  V1.02 (jul 2016) -> remove links to kernel/...
-#                  V1.01 (jul 2016) -> some minor improvements
-#                  V1.00 (jul 2016) -> release V1.00
-#                  V0.05 (jul 2016) -> some minor improvements
-#                  V0.04 (may 2016) -> add libbaalue and baalued
-#                  V0.03 (may 2016) -> add missing externals
-#                                      add cleanup $ARMHF_SRC_DIR
-#                  V0.02 (apr 2016) -> finalize
-#                                      add content to cleanup toolchain stuff
-#                  V0.01 (apr 2016) -> first skeleton version
+# Milestones  :    V0.01 (okt 2016) -> take over from a20_sdk
 #
 # Requires    :
 #
@@ -92,7 +76,7 @@ my_usage()
     echo "|        [-i] -> cleanup image dir                       |"
     echo "|        [-t] -> cleanup toolchain parts                 |"
     echo "|        [-u] -> cleanup user home dir parts             |"
-    echo "|        [-m] -> remove /opt/a20* and $HOME/src/a20*     |"
+    echo "|        [-m] -> remove /opt/arietta* and $HOME/src/ar*  |"
     echo "|                parts                                   |"
     echo "|        [-v] -> print version info                      |"
     echo "|        [-h] -> this help                               |"
@@ -161,15 +145,15 @@ done
 # ***             Error handling for missing shell values                    ***
 # ******************************************************************************
 
-if [[ ! ${ARMHF_HOME} ]]; then
+if [[ ! ${ARMEL_HOME} ]]; then
     MISSING_ENV='true'
 fi
 
-if [[ ! ${ARMHF_BIN_HOME} ]]; then
+if [[ ! ${ARMEL_BIN_HOME} ]]; then
     MISSING_ENV='true'
 fi
 
-if [[ ! ${ARMHF_SRC_HOME} ]]; then
+if [[ ! ${ARMEL_SRC_HOME} ]]; then
     MISSING_ENV='true'
 fi
 
@@ -195,19 +179,19 @@ fi
 
 clean_images()
 {
-    if [ -d $ARMHF_BIN_HOME/images ]; then
-        cd $ARMHF_BIN_HOME/images
+    if [ -d $ARMEL_BIN_HOME/images ]; then
+        cd $ARMEL_BIN_HOME/images
 	rm -rf *.tgz
 	echo "cleanup image dir"
     else
-        echo "INFO: no directory ${ARMHF_BIN_HOME}/images"
+        echo "INFO: no directory ${ARMEL_BIN_HOME}/images"
     fi
 }
 
 clean_external()
 {
-    if [ -d $ARMHF_BIN_HOME/external ]; then
-        cd $ARMHF_BIN_HOME/external
+    if [ -d $ARMEL_BIN_HOME/external ]; then
+        cd $ARMEL_BIN_HOME/external
 	echo "cleanup external dir"
 	rm -rf can-utils
 	rm -rf documents
@@ -222,39 +206,39 @@ clean_external()
 	rm -rf time_triggert_env
 	rm -rf can_lin_env
     else
-        echo "INFO: no directory ${ARMHF_BIN_HOME}/external"
+        echo "INFO: no directory ${ARMEL_BIN_HOME}/external"
     fi
 }
 
 clean_kernel()
 {
-    if [ -d $ARMHF_BIN_HOME/kernel ]; then
-        cd $ARMHF_BIN_HOME/kernel
+    if [ -d $ARMEL_BIN_HOME/kernel ]; then
+        cd $ARMEL_BIN_HOME/kernel
 	echo "cleanup kernel dir"
 	rm -rf linux-*
 	rm -rf modules_*
 	rm -rf patch-*
     else
-        echo "INFO: no directory ${ARMHF_BIN_HOME}/kernel"
+        echo "INFO: no directory ${ARMEL_BIN_HOME}/kernel"
     fi
 }
 
 clean_toolchain()
 {
-    if [ -d $ARMHF_BIN_HOME ]; then
-	cd $ARMHF_BIN_HOME
+    if [ -d $ARMEL_BIN_HOME ]; then
+	cd $ARMEL_BIN_HOME
     	echo "cleanup toolchain parts"
 	rm -rf host*
 	rm -rf toolchain*
     else
-        echo "INFO: no directory $ARMHF_BIN_HOME"
+        echo "INFO: no directory $ARMEL_BIN_HOME"
     fi
 }
 
 clean_user()
 {
-    if [ -d $ARMHF_SRC_HOME ]; then
-	cd $ARMHF_SRC_HOME
+    if [ -d $ARMEL_SRC_HOME ]; then
+	cd $ARMEL_SRC_HOME
     	echo "cleanup user specific parts"
 	rm -rf bin
 	rm -rf examples
@@ -265,23 +249,23 @@ clean_user()
 	rm -rf images
 	rm -rf external
     else
-        echo "INFO: no directory $ARMHF_SRC_HOME"
+        echo "INFO: no directory $ARMEL_SRC_HOME"
     fi
 }
 
 do_mrproper()
 {
-    if [ -d $ARMHF_SRC_HOME ]; then
-	cd $ARMHF_HOME
-	rm -rf $ARMHF_SRC_HOME
+    if [ -d $ARMEL_SRC_HOME ]; then
+	cd $ARMEL_HOME
+	rm -rf $ARMEL_SRC_HOME
     else
-        echo "INFO: no directory $ARMHF_SRC_HOME"
+        echo "INFO: no directory $ARMEL_SRC_HOME"
     fi
-    if [ -d $ARMHF_BIN_HOME ]; then
-	cd $ARMHF_HOME
-	sudo rm -rf $ARMHF_BIN_HOME
+    if [ -d $ARMEL_BIN_HOME ]; then
+	cd $ARMEL_HOME
+	sudo rm -rf $ARMEL_BIN_HOME
     else
-        echo "INFO: no directory $ARMHF_BIN_HOME"
+        echo "INFO: no directory $ARMEL_BIN_HOME"
     fi
 }
 
@@ -304,19 +288,19 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 if [ "$CLEAN_IMAGES" = 'true' ]; then
     clean_images
 else
-    echo "do not clean ${ARMHF_BIN_HOME}/images"
+    echo "do not clean ${ARMEL_BIN_HOME}/images"
 fi
 
 if [ "$CLEAN_EXTERNAL" = 'true' ]; then
     clean_external
 else
-    echo "do not clean ${ARMHF_BIN_HOME}/external"
+    echo "do not clean ${ARMEL_BIN_HOME}/external"
 fi
 
 if [ "$CLEAN_KERNEL" = 'true' ]; then
     clean_kernel
 else
-    echo "do not clean ${ARMHF_BIN_HOME}/kernel"
+    echo "do not clean ${ARMEL_BIN_HOME}/kernel"
 fi
 
 if [ "$CLEAN_TOOLCHAIN" = 'true' ]; then
@@ -328,7 +312,7 @@ fi
 if [ "$CLEAN_USER" = 'true' ]; then
 	clean_user
 else
-    echo "do not clean $ARMHF_SRC_HOME"
+    echo "do not clean $ARMEL_SRC_HOME"
 fi
 
 if [ "$MRPROPER" = 'true' ]; then

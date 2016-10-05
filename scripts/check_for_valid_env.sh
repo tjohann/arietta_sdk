@@ -24,16 +24,11 @@
 #
 ################################################################################
 #
-# Date/Beginn :    27.09.2016/05.07.2016
+# Date/Beginn :    05.10.2016/05.07.2016
 #
-# Version     :    V2.00
+# Version     :    V0.01
 #
-# Milestones  :    V2.00 (sep 2016) -> update version info fo A20_SDK_V2.0.0
-#                  V1.03 (aug 2016) -> add features of make_sdcard.sh
-#                  V1.02 (jul 2016) -> change exit code to 3
-#                  V1.01 (jul 2016) -> some smaller improvements
-#                  V1.00 (jul 2016) -> some smaller changes
-#                  V0.01 (jul 2016) -> first functional version
+# Milestones  :    V0.01 (okt 2016) -> take over from a20_sdk
 #
 # Requires    :
 #
@@ -41,7 +36,7 @@
 ################################################################################
 # Description
 #
-#   A simple tool to check if arm_env.sh and $ARMHF_KERNEL* in sync
+#   A simple tool to check if arm_env.sh and $ARMEL_KERNEL* in sync
 #
 # Some features
 #   - ...
@@ -52,7 +47,7 @@
 ################################################################################
 
 # VERSION-NUMBER
-VER='2.00'
+VER='0.01'
 
 # if env is sourced
 MISSING_ENV='false'
@@ -120,15 +115,15 @@ done
 # ***             Error handling for missing shell values                    ***
 # ******************************************************************************
 
-if [[ ! ${ARMHF_HOME} ]]; then
+if [[ ! ${ARMEL_HOME} ]]; then
     MISSING_ENV='true'
 fi
 
-if [[ ! ${ARMHF_BIN_HOME} ]]; then
+if [[ ! ${ARMEL_BIN_HOME} ]]; then
     MISSING_ENV='true'
 fi
 
-if [[ ! ${ARMHF_SRC_HOME} ]]; then
+if [[ ! ${ARMEL_SRC_HOME} ]]; then
     MISSING_ENV='true'
 fi
 
@@ -161,36 +156,36 @@ echo "+----------------------------------------+"
 echo " "
 
 
-TMP_STRING=`grep ARMHF_KERNEL_VER ${ARMHF_HOME}/armhf_env | awk -F '[=]' '{print $2}'`
-if [ "$TMP_STRING" != "$ARMHF_KERNEL_VER" ]; then
+TMP_STRING=`grep ARMEL_KERNEL_VER ${ARMEL_HOME}/armel_env | awk -F '[=]' '{print $2}'`
+if [ "$TMP_STRING" != "$ARMEL_KERNEL_VER" ]; then
     echo " "
     echo "+---------------- ERROR -----------------+"
-    echo "| The versions of ARMHF_KERNEL_VER: ${ARMHF_KERNEL_VER}"
-    echo "| and armhf_env: ${TMP_STRING} are different!"
+    echo "| The versions of ARMEL_KERNEL_VER: ${ARMEL_KERNEL_VER}"
+    echo "| and armel_env: ${TMP_STRING} are different!"
     echo "+----------------------------------------+"
     echo " "
     cleanup
     my_exit
 fi
 
-TMP_STRING=`grep ARMHF_RT_KERNEL_VER ${ARMHF_HOME}/armhf_env | awk -F '[=]' '{print $2}'`
-if [ "$TMP_STRING" != "$ARMHF_RT_KERNEL_VER" ]; then
+TMP_STRING=`grep ARMEL_RT_KERNEL_VER ${ARMEL_HOME}/armel_env | awk -F '[=]' '{print $2}'`
+if [ "$TMP_STRING" != "$ARMEL_RT_KERNEL_VER" ]; then
     echo " "
     echo "+---------------- ERROR -----------------+"
-    echo "| The versions of ARMHF_RT_KERNEL_VER: ${ARMHF_RT_KERNEL_VER}"
-    echo "| and armhf_env: ${TMP_STRING} are different!"
+    echo "| The versions of ARMEL_RT_KERNEL_VER: ${ARMEL_RT_KERNEL_VER}"
+    echo "| and armel_env: ${TMP_STRING} are different!"
     echo "+----------------------------------------+"
     echo " "
     cleanup
     my_exit
 fi
 
-TMP_STRING=`grep ARMHF_RT_VER ${ARMHF_HOME}/armhf_env | awk -F '[=]' '{print $2}'`
-if [ "$TMP_STRING" != "$ARMHF_RT_VER" ]; then
+TMP_STRING=`grep ARMEL_RT_VER ${ARMEL_HOME}/armel_env | awk -F '[=]' '{print $2}'`
+if [ "$TMP_STRING" != "$ARMEL_RT_VER" ]; then
     echo " "
     echo "+---------------- ERROR -----------------+"
-    echo "| The versions of ARMHF_RT_VER: ${ARMHF_RT_VER}"
-    echo "| and armhf_env: ${TMP_STRING} are different!"
+    echo "| The versions of ARMEL_RT_VER: ${ARMEL_RT_VER}"
+    echo "| and armel_env: ${TMP_STRING} are different!"
     echo "+----------------------------------------+"
     echo " "
     cleanup
