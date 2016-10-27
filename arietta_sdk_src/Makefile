@@ -2,16 +2,16 @@
 # my simple makefile act as something like a user interface
 #
 
-ifeq "${ARMHF_HOME}" ""
-    $(error error: please source armhf_env first!)
+ifeq "${ARMEL_HOME}" ""
+    $(error error: please source armel_env first!)
 endif
 
-ifeq "${ARMHF_BIN_HOME}" ""
-    $(error error: please source armhf_env first!)
+ifeq "${ARMEL_BIN_HOME}" ""
+    $(error error: please source armel_env first!)
 endif
 
-ifeq "${ARMHF_SRC_HOME}" ""
-    $(error error: please source armhf_env first!)
+ifeq "${ARMEL_SRC_HOME}" ""
+    $(error error: please source armel_env first!)
 endif
 
 MODULES = $(shell ls -d */ | cut -f1 -d'/')
@@ -47,25 +47,25 @@ clean::
 distclean: clean clean_toolchain clean_external clean_kernel clean_images clean_user_home
 
 clean_toolchain::
-	($(ARMHF_HOME)/scripts/clean_sdk.sh -t)
+	($(ARMEL_HOME)/scripts/clean_sdk.sh -t)
 
 clean_external::
-	($(ARMHF_HOME)/scripts/clean_sdk.sh -e)
+	($(ARMEL_HOME)/scripts/clean_sdk.sh -e)
 
 clean_kernel::
 	($(ARMHF_HOME)/scripts/clean_sdk.sh -k)
 
 clean_images::
-	($(ARMHF_HOME)/scripts/clean_sdk.sh -i)
+	($(ARMEL_HOME)/scripts/clean_sdk.sh -i)
 
 clean_user_home::
-	($(ARMHF_HOME)/scripts/clean_sdk.sh -u)
+	($(ARMEL_HOME)/scripts/clean_sdk.sh -u)
 
 clean_opt: clean_toolchain clean_external clean_kernel clean_images
 
 install::
-	(install $(ARMHF_HOME)/scripts/make_sdcard.sh $(HOME)/bin/a20_sdk_make_sdcard.sh)
-	(install $(ARMHF_HOME)/scripts/handle_kernel.sh $(HOME)/bin/a20_sdk_handle_kernel.sh)
+	(install $(ARMEL_HOME)/scripts/make_sdcard.sh $(HOME)/bin/a20_sdk_make_sdcard.sh)
+	(install $(ARMEL_HOME)/scripts/handle_kernel.sh $(HOME)/bin/a20_sdk_handle_kernel.sh)
 
 uninstall::
 	(rm -rf $(HOME)/bin/a20_sdk_make_sdcard.sh)
@@ -80,7 +80,7 @@ init_sdk: distclean
 	@echo "|              Init SDK -> you may need sudo               |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/init_sdk.sh -a)
+	($(ARMEL_HOME)/scripts/init_sdk.sh -a)
 
 init_user_home: clean_user_home
 	@echo "+----------------------------------------------------------+"
@@ -114,7 +114,7 @@ get_external_repos::
 	@echo "|               Clone useful external repos                |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_external_git_repos.sh -p "git")
+	($(ARMEL_HOME)/scripts/get_external_git_repos.sh -p "git")
 
 get_latest_kernel::
 	@echo "+----------------------------------------------------------+"
@@ -130,7 +130,7 @@ get_latest_rt_kernel::
 	@echo "|        Download latest supported rt kernel version       |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_latest_linux_kernel.sh -r)
+	($(ARMEL_HOME)/scripts/get_latest_linux_kernel.sh -r)
 
 get_latest_nonrt_kernel::
 	@echo "+----------------------------------------------------------+"
@@ -138,7 +138,7 @@ get_latest_nonrt_kernel::
 	@echo "|        Download latest supported nonrt kernel version    |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_latest_linux_kernel.sh -n)
+	($(ARMEL_HOME)/scripts/get_latest_linux_kernel.sh -n)
 
 get_toolchain::
 	@echo "+----------------------------------------------------------+"
@@ -154,11 +154,11 @@ get_image_tarballs::
 	@echo "|        Download latest supported image tarballs          |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b bananapi)
-	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b baalue)
-	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b bananapi-pro)
-	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b cubietruck)
-	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b olimex)
+	($(ARMEL_HOME)/scripts/get_image_tarballs.sh -b bananapi)
+	($(ARMEL_HOME)/scripts/get_image_tarballs.sh -b baalue)
+	($(ARMEL_HOME)/scripts/get_image_tarballs.sh -b bananapi-pro)
+	($(ARMEL_HOME)/scripts/get_image_tarballs.sh -b cubietruck)
+	($(ARMEL_HOME)/scripts/get_image_tarballs.sh -b olimex)
 
 get_bananapi_image_tarballs::
 	@echo "+----------------------------------------------------------+"
@@ -174,7 +174,7 @@ get_baalue_image_tarballs::
 	@echo "|        Download latest bananapi image tarballs           |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b baalue)
+	($(ARMEL_HOME)/scripts/get_image_tarballs.sh -b baalue)
 
 get_bananapi-pro_image_tarballs::
 	@echo "+----------------------------------------------------------+"
@@ -182,7 +182,7 @@ get_bananapi-pro_image_tarballs::
 	@echo "|        Download latest bananapi-pro image tarballs       |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b bananapi-pro)
+	($(ARMEL_HOME)/scripts/get_image_tarballs.sh -b bananapi-pro)
 
 get_cubietruck_image_tarballs::
 	@echo "+----------------------------------------------------------+"
@@ -190,7 +190,7 @@ get_cubietruck_image_tarballs::
 	@echo "|        Download latest cubietruck image tarballs         |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b cubietruck)
+	($(ARMEL_HOME)/scripts/get_image_tarballs.sh -b cubietruck)
 
 get_olimex_image_tarballs::
 	@echo "+----------------------------------------------------------+"
@@ -198,7 +198,7 @@ get_olimex_image_tarballs::
 	@echo "|        Download latest olimex image tarballs             |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_image_tarballs.sh -b olimex)
+	($(ARMEL_HOME)/scripts/get_image_tarballs.sh -b olimex)
 
 
 #
@@ -210,4 +210,4 @@ make_sdcard::
 	@echo "|              Start tool to make a SD-Card                |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/make_sdcard.sh)
+	($(ARMEL_HOME)/scripts/make_sdcard.sh)

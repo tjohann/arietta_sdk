@@ -6,9 +6,9 @@
 export MY_HOST_ARCH=$(uname -m)
 
 # set supported kernel version
-export ARMEL_KERNEL_VER=4.4.31
-export ARMEL_RT_KERNEL_VER=4.4.21
-export ARMEL_RT_VER=rt30
+export ARMEL_KERNEL_VER=4.4.27
+export ARMEL_RT_KERNEL_VER=4.4.27
+export ARMEL_RT_VER=rt37
 
 # home of the git repo
 export ARMEL_HOME=/var/lib/arietta_sdk
@@ -20,7 +20,7 @@ export ARMEL_SRC_HOME=$HOME/src/arietta_sdk
 # extend PATH for out arietta stuff
 export PATH=$PATH:${ARMEL_BIN_HOME}/toolchain/bin:${ARMEL_BIN_HOME}/host/usr/bin
 
-# set mount points for the sdcard -> bananapi-(M1/PRO)
+# set mount points for the sdcard
 export ARIETTA_SDCARD_KERNEL=/mnt/arietta/arietta_kernel
 export ARIETTA_SDCARD_ROOTFS=/mnt/arietta/arietta_rootfs
 export ARIETTA_SDCARD_HOME=/mnt/arietta/arietta_home
