@@ -1,6 +1,8 @@
 SDK for arietta based projects
 ==============================
 
+Note: i actually stopped further development (due to missing time)
+
 Summary repository for my different Arietta (http://www.acmesystems.it/arietta) based projects.
 
 
