@@ -226,7 +226,6 @@ BR2_TOOLCHAIN_EXTRA_EXTERNAL_LIBS=""
 # Host GDB Options
 #
 # BR2_PACKAGE_HOST_GDB is not set
-BR2_GDB_VERSION="7.11.1"
 
 #
 # Toolchain Generic Options
@@ -513,10 +512,7 @@ BR2_PACKAGE_ZIP=y
 # BR2_PACKAGE_DT is not set
 # BR2_PACKAGE_DUMA is not set
 # BR2_PACKAGE_FIO is not set
-BR2_PACKAGE_GDB=y
-BR2_PACKAGE_GDB_SERVER=y
-BR2_PACKAGE_GDB_DEBUGGER=y
-BR2_PACKAGE_GDB_TUI=y
+# BR2_PACKAGE_GDB is not set
 BR2_PACKAGE_GOOGLE_BREAKPAD_ARCH_SUPPORTS=y
 # BR2_PACKAGE_GOOGLE_BREAKPAD is not set
 # BR2_PACKAGE_IOZONE is not set
@@ -1993,35 +1989,35 @@ BR2_PACKAGE_OPENSSH=y
 #
 
 #
-# Please note:                                           
+# Please note:
 #
 
 #
-# - Buildroot does *not* generate binary packages,       
+# - Buildroot does *not* generate binary packages,
 #
 
 #
-# - Buildroot does *not* install any package database.   
+# - Buildroot does *not* install any package database.
 #
 
 #
-# *                                                      
+# *
 #
 
 #
-# It is up to you to provide those by yourself if you    
+# It is up to you to provide those by yourself if you
 #
 
 #
-# want to use any of those package managers.             
+# want to use any of those package managers.
 #
 
 #
-# *                                                      
+# *
 #
 
 #
-# See the manual:                                        
+# See the manual:
 #
 
 #
