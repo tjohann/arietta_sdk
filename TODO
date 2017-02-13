@@ -5,17 +5,13 @@
 
 
 #
-# -------------- 2016-10-05 ----------------------------------------------------
+# -------------- 2017-02-12 ----------------------------------------------------
 #
-
 ## sdk stuff
-- adapt check_for_valid_env.sh for arietta_sdk
-- adapt clean_sdk.sh for arietta_sdk
-- adapt init_sdk.sh for arietta_sdk
-- adapt get_toolchain.sh for arietta_sdk
+- initial setup
 
 # toolchain stuff
-- build cross-toolchain
+- build toolchain via crosstool-ng
 
 # target stuff
-- build void-linux rootfs
+- build rootfs via buildroot

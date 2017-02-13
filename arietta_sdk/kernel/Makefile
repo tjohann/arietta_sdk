@@ -2,16 +2,16 @@
 # my simple makefile act as something like a user interface
 #
 
-ifeq "${ARMEL_HOME}" ""
-    $(error error: please source armel_env first!)
+ifeq "${ARIETTA_HOME}" ""
+    $(error error: please source arietta_env first!)
 endif
 
-ifeq "${ARMEL_BIN_HOME}" ""
-    $(error error: please source armel_env first!)
+ifeq "${ARIETTA_BIN_HOME}" ""
+    $(error error: please source arietta_env first!)
 endif
 
-ifeq "${ARMEL_SRC_HOME}" ""
-    $(error error: please source armel_env first!)
+ifeq "${ARIETTA_SRC_HOME}" ""
+    $(error error: please source arietta_env first!)
 endif
 
 all::
@@ -26,14 +26,11 @@ all::
 	@echo "| make build_all_kernel -> build rt and non-rt kernel      |"
 	@echo "| make build_rt_kernel -> build rt kernel                  |"
 	@echo "| make build_non-rt_kernel -> build non-rt kernel          |"
-	@echo "| make clean              -> simple clean (no subdir)      |"
-	@echo "| make distclean          -> rm also downloaded/build parts|"
-	@echo "| ----------- installs below are for bananapi ------------ |"
 	@echo "| make install_all_kernel -> install rt and non-rt kernel  |"
 	@echo "| make install_rt_kernel -> install rt kernel              |"
 	@echo "| make install_non-rt_kernel -> install non-rt kernel      |"
-	@echo "| ------------------ helper scripts ---------------------- |"
-	@echo "| make prepare_kernel_folder                               |"
+	@echo "| make clean              -> simple clean (no subdir)      |"
+	@echo "| make distclean          -> rm also downloaded/build parts|"
 	@echo "+----------------------------------------------------------+"
 
 clean::
@@ -41,7 +38,7 @@ clean::
 
 distclean::
 	rm -f *~
-	($(ARMHF_HOME)/scripts/clean_sdk.sh -k)
+	($(ARIETTA_HOME)/scripts/clean_sdk.sh -k)
 
 get_latest_kernel::
 	@echo "+----------------------------------------------------------+"
@@ -49,7 +46,7 @@ get_latest_kernel::
 	@echo "|        Download latest supported kernel version          |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_latest_linux_kernel.sh -a)
+	($(ARIETTA_HOME)/scripts/get_latest_linux_kernel.sh -a)
 
 get_latest_rt_kernel::
 	@echo "+----------------------------------------------------------+"
@@ -57,7 +54,7 @@ get_latest_rt_kernel::
 	@echo "|        Download latest supported rt kernel version       |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_latest_linux_kernel.sh -r)
+	($(ARIETTA_HOME)/scripts/get_latest_linux_kernel.sh -r)
 
 get_latest_nonrt_kernel::
 	@echo "+----------------------------------------------------------+"
@@ -65,7 +62,7 @@ get_latest_nonrt_kernel::
 	@echo "|        Download latest supported non-rt kernel version   |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/get_latest_linux_kernel.sh -n)
+	($(ARIETTA_HOME)/scripts/get_latest_linux_kernel.sh -n)
 
 build_rt_kernel::
 	@echo "+----------------------------------------------------------+"
@@ -73,7 +70,7 @@ build_rt_kernel::
 	@echo "|                    build rt kernel                       |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/build_kernel.sh -r)
+	($(ARIETTA_HOME)/scripts/build_kernel.sh -r)
 
 build_non-rt_kernel::
 	@echo "+----------------------------------------------------------+"
@@ -81,7 +78,7 @@ build_non-rt_kernel::
 	@echo "|                   build non-rt kernel                    |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/build_kernel.sh -n)
+	($(ARIETTA_HOME)/scripts/build_kernel.sh -n)
 
 build_all_kernel::
 	@echo "+----------------------------------------------------------+"
@@ -89,31 +86,28 @@ build_all_kernel::
 	@echo "|                    build all kernel                      |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/build_kernel.sh -a)
+	($(ARIETTA_HOME)/scripts/build_kernel.sh -a)
 
 install_rt_kernel::
 	@echo "+----------------------------------------------------------+"
 	@echo "|                                                          |"
-	@echo "|               install rt kernel (bananapi)               |"
+	@echo "|               install rt kernel                          |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/install_kernel.sh -b bananapi -r)
+	($(ARIETTA_HOME)/scripts/install_kernel.sh -r)
 
 install_non-rt_kernel::
 	@echo "+----------------------------------------------------------+"
 	@echo "|                                                          |"
-	@echo "|               install non-rt kernel (bananapi)           |"
+	@echo "|               install non-rt kernel                      |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/install_kernel.sh -b bananapi -n)
+	($(ARIETTA_HOME)/scripts/install_kernel.sh -n)
 
 install_all_kernel::
 	@echo "+----------------------------------------------------------+"
 	@echo "|                                                          |"
-	@echo "|               install all kernel (bananapi)              |"
+	@echo "|               install all kernel                         |"
 	@echo "|                                                          |"
 	@echo "+----------------------------------------------------------+"
-	($(ARMHF_HOME)/scripts/install_kernel.sh -b bananapi -a)
-
-prepare_kernel_folder::
-	($(ARMHF_HOME)/scripts/helpers/prepare_kernel_folder.sh)
+	($(ARIETTA_HOME)/scripts/install_kernel.sh -a)

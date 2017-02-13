@@ -2,7 +2,7 @@
 #
 # Title       :    defines.mk
 #
-# (c) 2015-2016, thorsten.johannvorderbrueggen@t-online.de
+# (c) 2015-2017, thorsten.johannvorderbrueggen@t-online.de
 #
 ################################################################################
 #
@@ -10,10 +10,10 @@
 #   Common defines for all code used within this sdk.
 #
 # Usage:
-#   - source armhf_env
+#   - source arietta_env
 #   - add this to the makefile
 #   SNIP
-#   include ${ARMHF_HOME}/include/defines.mk
+#   include ${ARIETTA_HOME}/include/defines.mk
 #   SNIP
 #
 ################################################################################
@@ -24,19 +24,19 @@ CC = gcc
 AR = ar
 LD = ld
 
-CFLAGS = -I${ARMHF_SRC_HOME}/include -g -Wall -Wextra -std=gnu11
-LDLIBS = -L${ARMHF_SRC_HOME}/lib -lpthread -lrt
+CFLAGS = -I${ARIETTA_SRC_HOME}/include -g -Wall -Wextra -std=gnu11
+LDLIBS = -L${ARIETTA_SRC_HOME}/lib -lpthread -lrt
 
 # ---- target ----
 ifeq (${MY_HOST_ARCH},x86_64)
-	CC_TARGET = arm-none-linux-gnueabihf-gcc
-	AR_TARGET = arm-none-linux-gnueabihf-ar
-	LD_TARGET = arm-none-linux-gnueabihf-ld
+	CC_TARGET = arm-arietta-linux-gnueabi-gcc
+	AR_TARGET = arm-arietta-linux-gnueabi-ar
+	LD_TARGET = arm-arietta-linux-gnueabi-ld
 else
 	CC_TARGET = gcc
 	AR_TARGET = ar
 	LD_TARGET = ld
 endif
 
-LDLIBS_TARGET = -L${ARMHF_SRC_HOME}/lib_target -lpthread -lrt
+LDLIBS_TARGET = -L${ARIETTA_SRC_HOME}/lib_target -lpthread -lrt
 
