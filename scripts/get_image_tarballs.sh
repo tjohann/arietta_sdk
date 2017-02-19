@@ -204,7 +204,7 @@ fi
 
 DOWNLOAD_IMAGE="http://sourceforge.net/projects/arietta-sdk/files/arietta_kernel.tgz"
 get_tarball
- 
+
 DOWNLOAD_IMAGE="http://sourceforge.net/projects/arietta-sdk/files/arietta_rootfs.tgz"
 get_tarball
 

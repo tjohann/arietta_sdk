@@ -228,7 +228,7 @@ umount_partitions()
 	echo "ERROR -> could not umount ${SD_ROOTFS}" >&2
 	# do not exit -> will try to umount the others
     fi
-    
+
     umount $SD_HOME
     if [ $? -ne 0 ] ; then
 	echo "ERROR -> could not umount ${SD_HOME}" >&2

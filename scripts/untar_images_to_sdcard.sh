@@ -194,7 +194,7 @@ check_tarballs()
 	echo "ERROR -> ${ARIETTA_BIN_HOME}/images/arietta_kernel.tgz not available!" >&2
 	my_exit
     fi
-    
+
     if [[ ! -f "${ARIETTA_BIN_HOME}/images/arietta_rootfs.tgz" ]]; then
 	echo "ERROR -> ${ARIETTA_BIN_HOME}/images/arietta_rootfs.tgz not available!" >&2
 	my_exit
@@ -256,7 +256,7 @@ untar_images()
 	echo "ERROR -> could not untar ${ARIETTA_BIN_HOME}/images/arietta_kernel.tgz" >&2
 	my_exit
     fi
-    
+
     sudo tar xzpvf ${ARIETTA_BIN_HOME}/images/arietta_rootfs.tgz
     if [ $? -ne 0 ] ; then
 	echo "ERROR -> could not untar ${ARIETTA_BIN_HOME}/images/arietta_rootfs.tgz" >&2
