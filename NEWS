@@ -5,3 +5,6 @@
 
 2017-02-19 -> ## toolchain stuff
 	      upload first version of toolchain
+
+	      ## target && sdk stuff
+	      update external kernel to 4.9.11 and 4.9.11-rt9
