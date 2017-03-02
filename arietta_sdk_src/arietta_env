@@ -6,9 +6,9 @@
 export MY_HOST_ARCH=$(uname -m)
 
 # set supported kernel version
-export ARIETTA_KERNEL_VER=4.9.11
-export ARIETTA_RT_KERNEL_VER=4.9.11
-export ARIETTA_RT_VER=rt9
+export ARIETTA_KERNEL_VER=4.9.13
+export ARIETTA_RT_KERNEL_VER=4.9.13
+export ARIETTA_RT_VER=rt11
 
 # home of the git repo
 export ARIETTA_HOME=/var/lib/arietta_sdk
