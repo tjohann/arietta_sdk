@@ -2,6 +2,9 @@
 # some news ... see also TODO for hints
 #
 
+2017-04-18 -> ## target && sdk stuff
+	      update external kernel to 4.9.23 and 4.9.20-rt16
+
 2017-03-02 -> ## target && sdk stuff
 	      update external kernel to 4.9.13 and 4.9.13-rt11
 
