@@ -3,6 +3,9 @@
 #
 
 2017-05-18 -> ## target && sdk stuff
+	      update external kernel to 4.9.95 and 4.9.84-rt62
+
+2017-05-18 -> ## target && sdk stuff
 	      update external kernel to 4.9.28 and 4.9.27-rt18
 
 2017-04-18 -> ## target && sdk stuff
